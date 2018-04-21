@@ -1,21 +1,24 @@
 package com.example.a16254868.usuarioasteroide
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
-import android.widget.DatePicker
-
-import kotlinx.android.synthetic.main.activity_cadastro_usuario_segunda_parte.*
-import kotlinx.android.synthetic.main.content_cadastro_usuario_segunda_parte.*
-import java.text.SimpleDateFormat
-import java.util.*
 import android.widget.EditText
 import android.widget.Toast
-import org.jetbrains.anko.editText
-import org.jetbrains.anko.toast
+import kotlinx.android.synthetic.main.activity_cadastro_usuario_segunda_parte.*
+import kotlinx.android.synthetic.main.content_cadastro_usuario_segunda_parte.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
+import org.json.JSONObject
+import utils.MaskEditUtil
+import utils.repetirUsuario
+import java.net.URL
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class CadastroUsuarioSegundaParteActivity : AppCompatActivity() {
@@ -25,14 +28,19 @@ class CadastroUsuarioSegundaParteActivity : AppCompatActivity() {
 
     var BRAZIL = Locale("pt", "BR")
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_usuario_segunda_parte)
         setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        var usuario = Usuario()
+
+        val preferencias = getSharedPreferences("Cliente", Context.MODE_PRIVATE)
+
+        val login = preferencias.getString("login", "")
+        val senha = preferencias.getString("senha", "")
 
         //DEIXANDO O RADIO BUTTON MASCULINO CHECKED
         sexoMasc.isChecked = true
@@ -59,6 +67,55 @@ class CadastroUsuarioSegundaParteActivity : AppCompatActivity() {
                     myCalendar.get(Calendar.DAY_OF_MONTH)).show()
         })
 
+        val tela:String = intent.getStringExtra("tela")
+        val nomeCompleto:String = intent.getStringExtra("NomeUser")
+        val user:String = intent.getStringExtra("user")
+        val senhaUser:String = intent.getStringExtra("senhaUser")
+        val email:String = intent.getStringExtra("emailUser")
+
+        if(tela.equals("perfil")){
+            tltTelaCadastroPerfilSegundaParte.text = "Seu Perfil"
+            botaoCadastrarUsuario.text = "Atualizar"
+
+            repetirUsuario(login, senha, applicationContext) {
+
+                usuario = it
+
+                preencherCampos(usuario)
+            }
+        }
+
+        //Verificando se o EditText perdeu o foco
+        txtCEP.setOnFocusChangeListener{ v, hasFocus ->
+            if (!hasFocus) {
+                val cep = txtCEP.text.toString()
+
+                //executar tarefas em segundo plano
+                doAsync {
+
+                    //Lendo a internet e retornando o resultado em json
+                    val resultado = URL("https://viacep.com.br/ws/$cep/json/").readText()
+
+                    //transformando json pra objeto
+                    val retornoJson = JSONObject(resultado)
+
+                    //pegando cada variavel
+                    val logradouro = retornoJson.getString("logradouro")
+                    val cidade = retornoJson.getString("localidade")
+                    val bairro = retornoJson.getString("bairro")
+
+                    Log.d("API", resultado)
+
+                    //executa na Thread principal
+                    uiThread {
+                        cidadeTeste.text = cidade
+                    }
+                }
+            }
+        }
+
+
+
         botaoCadastrarUsuario.setOnClickListener {
 
             var sexo = ""
@@ -77,27 +134,53 @@ class CadastroUsuarioSegundaParteActivity : AppCompatActivity() {
             }else if(txtCEP.text.toString().equals("")){
                 txtCEP.setError("Esse campo é obrigatório")
             }else if(txtNumeroCasa.text.toString().equals("")){
-                txtCEP.setError("Esse campo é obrigatório")
+                txtNumeroCasa.setError("Esse campo é obrigatório")
             }else if(txtLogradouro.text.toString().equals("")){
-                txtNumeroCasa.setError("Esse campo é obrigatório")
+                txtLogradouro.setError("Esse campo é obrigatório")
             }else if(txtBairro.text.toString().equals("")){
-                txtNumeroCasa.setError("Esse campo é obrigatório")
+                txtBairro.setError("Esse campo é obrigatório")
             }else if(txtComplemento.text.toString().equals("")){
-                txtNumeroCasa.setError("Esse campo é obrigatório")
+                txtComplemento.setError("Esse campo é obrigatório")
             }else if(txtCidade.text.toString().equals("")){
-                txtNumeroCasa.setError("Esse campo é obrigatório")
+                txtCidade.setError("Esse campo é obrigatório")
             }else if(txtEstado.text.toString().equals("")){
-                txtNumeroCasa.setError("Esse campo é obrigatório")
+                txtEstado.setError("Esse campo é obrigatório")
             }else {
 
                 if(sexoMasc.isChecked){
                     sexo = "M"
-                    startActivity(Intent(applicationContext, MainActivity::class.java))
                 }else {
                     sexo = "F"
                 }
 
-                Toast.makeText(applicationContext, "Usuario cadastrado com sucesso", Toast.LENGTH_SHORT).show()
+                doAsync {
+
+                    val url = "http://10.107.144.9:3000/api/v1/cliente"
+
+                    val map = HashMap<String, String>()
+                    map.put("nome", nomeCompleto)
+                    map.put("login", user)
+                    map.put("email", email)
+                    map.put("senha", senhaUser)
+                    map.put("datanasc", "2000-10-10")
+                    map.put("sexo", sexo)
+                   // map.put("telefone", txtTelefone.text.toString())
+                    map.put("cpf", txtCPF.text.toString())
+                    map.put("rg", txtRG.text.toString())
+
+                    val resultado = HttpConnection.post(url, map)
+
+                    Log.d("API", resultado)
+
+                    uiThread {
+                        //Code
+                    }
+                }
+
+                Toast.makeText(applicationContext, "Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show()
+
+                startActivity(Intent(applicationContext, MainActivity::class.java))
+
             }
 
         }
@@ -111,6 +194,20 @@ class CadastroUsuarioSegundaParteActivity : AppCompatActivity() {
         txtCPF.addTextChangedListener(MaskEditUtil.mask(txtCPF, "###.###.###-##"))
         txtRG.addTextChangedListener(MaskEditUtil.mask(txtRG, "##.###.###-#"))
         txtCEP.addTextChangedListener(MaskEditUtil.mask(txtCEP, "#####-###"))
+    }
+
+    fun preencherCampos(usuario: Usuario){
+        etDate!!.setText(usuario.getDatanasc().toString())
+        txtTelefone.setText(usuario.getTelefone().toString())
+        txtCelular.setText(usuario.getCelular().toString())
+        txtCPF.setText(usuario.getCpf().toString())
+        txtRG.setText(usuario.getRg().toString())
+
+        if(usuario.getSexo().toString().equals("M")){
+            sexoMasc.isChecked = true
+        }else{
+            sexoFem.isChecked = true
+        }
     }
 
 }

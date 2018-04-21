@@ -16,4 +16,10 @@
     <string name="title_activity_cadastro_usuario_segunda_parte">
         CadastroUsuarioSegundaParteActivity
     </string>
+    <string name="title_activity_qrcode_usuario">QRCodeUsuarioActivity</string>
+    <string name="title_activity_perfil_usuario">PerfilUsuarioActivity</string>
+    <string name="title_activity_acompanhamento_viagem_usuario">
+        AcompanhamentoViagemUsuarioActivity
+    </string>
+    <string name="title_activity_fale_conosco">FaleConoscoActivity</string>
 </resources>

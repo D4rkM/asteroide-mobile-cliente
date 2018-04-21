@@ -41,15 +41,6 @@ public class HomeUsuarioActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -103,6 +94,11 @@ public class HomeUsuarioActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+            finish();
+
             return true;
         }
 
@@ -116,7 +112,10 @@ public class HomeUsuarioActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_perfil) {
-            // Handle the camera action
+            Intent intent = new Intent(getApplicationContext(), PerfilUsuarioActivity.class);
+
+            startActivity(intent);
+
         } else if (id == R.id.nav_compraPassagem) {
 
         } else if (id == R.id.nav_notificacao) {
@@ -130,9 +129,9 @@ public class HomeUsuarioActivity extends AppCompatActivity
         } else if (id == R.id.nav_historico) {
 
         } else if (id == R.id.nav_contato) {
-
+            startActivity(new Intent(getApplicationContext(), FaleConoscoActivity.class));
         } else if (id == R.id.nav_qrcode) {
-
+            startActivity(new Intent(getApplicationContext(), QRCodeUsuarioActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

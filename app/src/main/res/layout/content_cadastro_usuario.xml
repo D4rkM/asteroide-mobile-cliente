@@ -8,7 +8,9 @@
     tools:context="com.example.a16254868.usuarioasteroide.CadastroUsuarioActivity"
     tools:showIn="@layout/activity_cadastro_usuario"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <TextView
         android:layout_width="wrap_content"
@@ -17,7 +19,8 @@
         android:text="Cadastro"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="#4d9b61"/>
+        android:textColor="#4d9b61"
+        android:id="@+id/tltTelaCadastroPefil"/>
 
     <ScrollView
         android:layout_width="match_parent"

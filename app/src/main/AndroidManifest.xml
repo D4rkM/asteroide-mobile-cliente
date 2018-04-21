@@ -49,6 +49,33 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.a16254868.usuarioasteroide.CadastroUsuarioActivity" />
         </activity>
+        <activity
+            android:name=".QRCodeUsuarioActivity"
+            android:label="QRCode"
+            android:parentActivityName=".HomeUsuarioActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.a16254868.usuarioasteroide.HomeUsuarioActivity" />
+        </activity>
+        <activity
+            android:name=".PerfilUsuarioActivity"
+            android:label="Perfil"
+            android:parentActivityName=".HomeUsuarioActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.a16254868.usuarioasteroide.HomeUsuarioActivity" />
+        </activity>
+        <activity
+            android:name=".FaleConoscoActivity"
+            android:label="Contato"
+            android:parentActivityName=".HomeUsuarioActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.a16254868.usuarioasteroide.HomeUsuarioActivity" />
+        </activity>
     </application>
 
 </manifest>

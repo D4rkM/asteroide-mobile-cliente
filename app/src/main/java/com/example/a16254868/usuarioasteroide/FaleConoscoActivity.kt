@@ -1,36 +1,43 @@
 package com.example.a16254868.usuarioasteroide
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
+
+import kotlinx.android.synthetic.main.activity_fale_conosco.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_fale_conosco.*
+import org.jetbrains.anko.backgroundDrawable
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import org.json.JSONArray
 
-class MainActivity : AppCompatActivity() {
+class FaleConoscoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_fale_conosco)
+        setSupportActionBar(toolbar)
 
-        val preferencias = getSharedPreferences("Cliente", Context.MODE_PRIVATE)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        botaoLogar.setOnClickListener {
+        enviarConosco.setOnClickListener {
 
             doAsync {
 
-                val login = txtLoginUsuario.text.toString()
-                val senha = txtSenhaUsuario.text.toString()
+                val sugestao = txtSugestao.text.toString()
+                val reclamacao = txtReclamacao.text.toString()
+                val elogio = txtElogio.text.toString()
 
-                val url = "http://10.107.144.9:3000/api/v1/autenticar/cliente"
+                val url = "http://10.107.144.9:3000/api/v1/sugestoes"
 
                 val map = HashMap<String, String>()
-                map.put("login", login)
-                map.put("senha", senha)
+                /*map.put("sugestao", login)
+                map.put("reclamacao", senha)
+                map.put("elogio", senha)*/
 
                 val resultado = HttpConnection.post(url, map)
 
@@ -46,14 +53,15 @@ class MainActivity : AppCompatActivity() {
                     }else{
                         for (i in 0 until jsonarray.length()) {
 
-                            preferencias.edit().putString("login", login).apply()
-                            preferencias.edit().putString("senha", senha).apply()
+                            val jsonobject = jsonarray.getJSONObject(i)
 
                             val intent = Intent(applicationContext, HomeUsuarioActivity::class.java)
 
                             startActivity(intent)
 
                             finish()
+
+                            Toast.makeText(applicationContext, "Usuário logado com sucesso", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -62,14 +70,6 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        botaoCadastrar.setOnClickListener {
-
-            val intent = Intent(this, CadastroUsuarioActivity::class.java)
-
-            intent.putExtra("tela", "Cadastro")
-
-            startActivity(intent)
-
-        }
     }
+
 }

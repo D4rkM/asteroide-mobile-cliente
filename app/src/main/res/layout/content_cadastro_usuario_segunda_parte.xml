@@ -8,7 +8,9 @@
     tools:context="com.example.a16254868.usuarioasteroide.CadastroUsuarioSegundaParteActivity"
     tools:showIn="@layout/activity_cadastro_usuario_segunda_parte"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <TextView
         android:layout_width="wrap_content"
@@ -18,7 +20,8 @@
         android:text="Dados Pessoais"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="#4d9b61" />
+        android:textColor="#4d9b61"
+        android:id="@+id/tltTelaCadastroPerfilSegundaParte"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -280,7 +283,8 @@
                     android:layout_weight="1"
                     android:text="Cidade:"
                     android:textSize="13sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:id="@+id/cidadeTeste"/>
 
 
                 <TextView
