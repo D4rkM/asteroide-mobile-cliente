@@ -26,53 +26,54 @@
         android:layout_marginTop="50dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_launcher_background" />
+            android:src="@drawable/ic_launcher_background"
+            android:id="@+id/foto_usuario"/>
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Alterar Perfil"
-            android:layout_gravity="center_vertical"
-            android:textStyle="bold"
-            android:textColor="#1f9134"
-            android:id="@+id/alterarPerfil"/>
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Alterar foto"
+                android:layout_gravity="center_vertical"
+                android:textStyle="bold"
+                android:textColor="#1f9134"
+                android:id="@+id/alterarFoto"
+                android:layout_marginTop="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Configurar Perfil"
+                android:layout_gravity="center_vertical"
+                android:textStyle="bold"
+                android:textColor="#1f9134"
+                android:id="@+id/alterarPerfil"
+                android:layout_marginTop="30dp"/>
+
+        </LinearLayout>
+
 
     </LinearLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="QRCode"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="40dp"
-        android:textColor="#595b5b"
-        android:textStyle="bold"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/ic_launcher_background" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Visualizar"
-            android:layout_gravity="center_vertical"
-            android:textStyle="bold"
-            android:textColor="#1f9134"
-            android:id="@+id/visualizarQRCode"/>
-
-    </LinearLayout>
+        android:text="Visualize seu QRCode"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textColor="#1f9134"
+        android:id="@+id/visualizarQRCode"
+        android:layout_marginTop="50dp"/>
 
 </LinearLayout>

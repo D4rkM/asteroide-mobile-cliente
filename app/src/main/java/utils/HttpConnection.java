@@ -1,4 +1,4 @@
-package com.example.a16254868.usuarioasteroide;
+package utils;
 
 import android.util.Log;
 
@@ -121,5 +121,7 @@ public class HttpConnection {
         }
         return response;
     }
+
+
 }
 

@@ -1,4 +1,4 @@
-package com.example.a16254868.usuarioasteroide;
+package models;
 
 /**
  * Created by 16254868 on 10/04/2018.
@@ -9,7 +9,8 @@ public class Viagem {
     private int id;
     private String valor;
     private String data;
-    private String hora;
+    private String horaPartida;
+    private String horaChegada;
     private String imagem;
     private String descricao;
     private String km;
@@ -18,9 +19,16 @@ public class Viagem {
 
     public Viagem(){}
 
-    public Viagem(String nome){
+    public Viagem(int id, String valor, String nome, String data, String horaPartida, String horaChegada, String descricao,
+                  String imagem) {
+        this.id = id;
+        this.valor = valor;
         this.nome = nome;
-
+        this.data = data;
+        this.horaPartida = horaPartida;
+        this.horaChegada = horaChegada;
+        this.descricao = descricao;
+        this.imagem = imagem;
     }
 
     public int getId() {
@@ -47,12 +55,20 @@ public class Viagem {
         this.data = data;
     }
 
-    public String getHora() {
-        return hora;
+    public String getHoraPartida() {
+        return horaPartida;
     }
 
-    public void setHora(String hora) {
-        this.hora = hora;
+    public void setHoraPartida(String horaPartida) {
+        this.horaPartida = horaPartida;
+    }
+
+    public String getHoraChegada() {
+        return horaChegada;
+    }
+
+    public void setHoraChegada(String horaChegada) {
+        this.horaChegada = horaChegada;
     }
 
     public String getImagem() {

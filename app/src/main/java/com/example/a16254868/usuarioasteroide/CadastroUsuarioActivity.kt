@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_cadastro_usuario.*
 import kotlinx.android.synthetic.main.content_cadastro_usuario.*
+import models.Usuario
 import utils.repetirUsuario
 
 class CadastroUsuarioActivity : AppCompatActivity() {
@@ -80,18 +81,29 @@ class CadastroUsuarioActivity : AppCompatActivity() {
         }else{
             btnContinuarCadastro.setOnClickListener {
 
-                intent = Intent(this, CadastroUsuarioSegundaParteActivity::class.java)
+                if(txtNomeCompletoUser.text.toString().equals("")){
+                    txtNomeCompletoUser.setError("Esse campo é obrigatório")
+                }else if(txtUser.text.toString().equals("")){
+                    txtUser.setError("Esse campo é obrigatório")
+                }else if(txtConfirmarSenhaUser.text.toString() != txtSenhaUser.text.toString()){
+                    txtConfirmarSenhaUser.setError("As senhas não condizem")
+                }else if(txtEmailUser.text.toString().equals("")){
+                    txtEmailUser.setError("Esse campo é obrigatório")
+                }else{
 
-                intent.putExtra("NomeUser", txtNomeCompletoUser.text.toString())
-                intent.putExtra("user", txtUser.text.toString())
-                intent.putExtra("senhaUser", txtSenhaUser.text.toString())
-                intent.putExtra("emailUser", txtEmailUser.text.toString())
+                    intent = Intent(this, CadastroUsuarioSegundaParteActivity::class.java)
 
-                intent.putExtra("tela", tela)
+                    intent.putExtra("NomeUser", txtNomeCompletoUser.text.toString())
+                    intent.putExtra("user", txtUser.text.toString())
+                    intent.putExtra("senhaUser", txtSenhaUser.text.toString())
+                    intent.putExtra("emailUser", txtEmailUser.text.toString())
 
-                startActivity(intent)
+                    intent.putExtra("tela", tela)
 
-                finish()
+                    startActivity(intent)
+
+                    finish()
+                }
             }
         }
 

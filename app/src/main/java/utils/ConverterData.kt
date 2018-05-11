@@ -1,16 +1,19 @@
 package utils
 
 import java.text.SimpleDateFormat
-import java.util.*
 
 /**
  * Created by 16254868 on 18/04/2018.
  */
-fun converterDataParaSistema(data:String): Date {
+fun converterDataParaSistema(data:String): String {
 
-    val df1 = SimpleDateFormat("dd/MM/yyyy")
+    var data = data
+    var f = SimpleDateFormat("yyyy-MM-dd")
+    var dataParse = f.parse(data)
 
-    val dataSistema = df1.parse(data)
+    var f2 = SimpleDateFormat("dd/MM/yyyy")
 
-    return  dataSistema
+    var dataFormatada = f2.format(dataParse)
+
+    return dataFormatada
 }

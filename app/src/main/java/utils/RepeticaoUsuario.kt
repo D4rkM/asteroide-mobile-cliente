@@ -4,8 +4,7 @@ import android.content.Context
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.util.Log
 import android.widget.Toast
-import com.example.a16254868.usuarioasteroide.HttpConnection
-import com.example.a16254868.usuarioasteroide.Usuario
+import models.Usuario
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import org.json.JSONArray
@@ -13,13 +12,15 @@ import org.json.JSONArray
 /**
  * Created by 16254868 on 20/04/2018.
  */
+
+//FUNÇÃO PARA REPETIR USUÁRIO NO SISTEMA
 fun repetirUsuario(loginUsuario:String, senhaUsuario:String, context:Context, f:(u: Usuario)->Unit){
 
     var usuario = Usuario()
 
     T.doAsync {
 
-        val url = "http://10.107.144.9:3000/api/v1/autenticar/cliente"
+        val url = ipServidorComPorta() +"/api/v1/autenticar/cliente"
 
         val map = HashMap<String, String>()
         map.put("login", loginUsuario)
@@ -28,7 +29,6 @@ fun repetirUsuario(loginUsuario:String, senhaUsuario:String, context:Context, f:
         val resultado = HttpConnection.post(url, map)
 
         Log.d("API", resultado)
-
 
         uiThread {
 
@@ -45,7 +45,7 @@ fun repetirUsuario(loginUsuario:String, senhaUsuario:String, context:Context, f:
                     usuario = Usuario(jsonobject.getInt("id"), jsonobject.getString("nome"), jsonobject.getString("login"), jsonobject.getString("cpf"), jsonobject.getString("email"), jsonobject.getString("datanasc"),
                             jsonobject.getString("sexo"), jsonobject.getString("telefone"), jsonobject.getString("celular"), jsonobject.getString("rg"))
 
-                    f.invoke(usuario)
+                    f.invoke(usuario)//CHAMANDO FUNÇÃO DE CALLBACK PARA RETORNAR DADOS DA UITHREAD
 
                 }
             }

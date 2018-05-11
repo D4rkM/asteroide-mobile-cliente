@@ -22,4 +22,10 @@
         AcompanhamentoViagemUsuarioActivity
     </string>
     <string name="title_activity_fale_conosco">FaleConoscoActivity</string>
+    <string name="myAlphaNumeric">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 </string>
+    <string name="title_activity_compra_passagem">CompraPassagemActivity</string>
+    <string name="title_activity_compra_passagem_segundo_passo">CompraPassagemSegundoPasso</string>
+    <string name="title_activity_cadastro_usuario_terceiro_passo">
+        CadastroUsuarioTerceiroPassoActivity
+    </string>
 </resources>

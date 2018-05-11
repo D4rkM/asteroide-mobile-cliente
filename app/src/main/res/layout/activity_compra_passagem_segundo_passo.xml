@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.a16254868.usuarioasteroide.utils.HomeUsuarioActivity">
+    tools:context="com.example.a16254868.usuarioasteroide.CompraPassagemSegundoPasso">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_home_usuario" />
+    <include layout="@layout/content_compra_passagem_segundo_passo" />
 
 
 </android.support.design.widget.CoordinatorLayout>

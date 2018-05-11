@@ -11,22 +11,23 @@ import android.widget.EditText
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_cadastro_usuario_segunda_parte.*
 import kotlinx.android.synthetic.main.content_cadastro_usuario_segunda_parte.*
+import models.Usuario
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
-import org.json.JSONObject
-import utils.MaskEditUtil
-import utils.repetirUsuario
-import java.net.URL
+import utils.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+/////////////////////ARRRRRRRRRRRRRRUMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR A LISTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 class CadastroUsuarioSegundaParteActivity : AppCompatActivity() {
 
     private val myCalendar = Calendar.getInstance()
     private var etDate: EditText? = null
 
     var BRAZIL = Locale("pt", "BR")
+
+    var sexo = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,10 +84,124 @@ class CadastroUsuarioSegundaParteActivity : AppCompatActivity() {
 
                 preencherCampos(usuario)
             }
+
+            //Atualizar Usuário
+            botaoCadastrarUsuario.setOnClickListener {
+                if(sexoMasc.isChecked){
+                    sexo = "M"
+                }else {
+                    sexo = "F"
+                }
+
+                doAsync {
+
+                    val url = ipServidorComPorta() +"/api/v1/cliente/"+usuario.getId().toString()
+
+                    val map = HashMap<String, String>()
+                    map.put("nome", nomeCompleto)
+                    map.put("login", user)
+                    map.put("email", email)
+                    map.put("senha", senhaUser)
+                    map.put("datanasc", etDate!!.text.toString())
+                    map.put("sexo", sexo)
+                    map.put("telefone", txtTelefone.text.toString())
+                    map.put("celular", txtCelular.text.toString())
+                    map.put("cpf", txtCPF.text.toString())
+                    map.put("rg", txtRG.text.toString())
+
+                    val resultado = HttpConnection.post(url, map)
+
+                    Log.d("API", resultado)
+
+                    uiThread {
+                        //Code
+                    }
+                }
+
+                preferencias.edit().putString("login", user).apply()
+
+                if(senhaUser != ""){
+                    preferencias.edit().putString("senha", senhaUser).apply()
+                }else{
+                    preferencias.edit().putString("senha", senha).apply()
+                }
+
+                toast("Dados atualizados com sucesso!")
+
+
+            }
+        }else{
+            botaoCadastrarUsuario.setOnClickListener {
+
+                //TRATAMENTOS NAS CAIXAS DE TEXTO
+                if(etDate!!.text.toString().equals("")){
+                    etDate!!.setError("Esse campo é obrigatório")
+                }else if(txtTelefone.text.toString().equals("")){
+                    txtTelefone.setError("Esse campo é obrigatório")
+                }else if(txtCelular.text.toString().equals("")){
+                    txtCelular.setError("Esse campo é obrigatório")
+                }else if(txtCPF.text.toString().equals("")){
+                    txtCPF.setError("Esse campo é obrigatório")
+                }else if(txtRG.text.toString().equals("")){
+                    txtRG.setError("Esse campo é obrigatório")
+                }else if(txtCEP.text.toString().equals("")){
+                    txtCEP.setError("Esse campo é obrigatório")
+                }else if(txtNumeroCasa.text.toString().equals("")){
+                    txtNumeroCasa.setError("Esse campo é obrigatório")
+                }else if(txtLogradouro.text.toString().equals("")){
+                    txtLogradouro.setError("Esse campo é obrigatório")
+                }else if(txtBairro.text.toString().equals("")){
+                    txtBairro.setError("Esse campo é obrigatório")
+                }else if(txtComplemento.text.toString().equals("")){
+                    txtComplemento.setError("Esse campo é obrigatório")
+                }else if(txtCidade.text.toString().equals("")){
+                    txtCidade.setError("Esse campo é obrigatório")
+                }else if(txtEstado.text.toString().equals("")){
+                    txtEstado.setError("Esse campo é obrigatório")
+                }else {
+
+                    if(sexoMasc.isChecked){
+                        sexo = "M"
+                    }else {
+                        sexo = "F"
+                    }
+
+                    doAsync {
+
+                        val url = ipServidorComPorta() +"/api/v1/cliente"
+
+                        val map = HashMap<String, String>()
+                        map.put("nome", nomeCompleto)
+                        map.put("login", user)
+                        map.put("email", email)
+                        map.put("senha", senhaUser)
+                        map.put("datanasc", etDate!!.text.toString())
+                        map.put("sexo", sexo)
+                        map.put("telefone", txtTelefone.text.toString())
+                        map.put("celular", txtCelular.text.toString())
+                        map.put("cpf", txtCPF.text.toString())
+                        map.put("rg", txtRG.text.toString())
+
+                        val resultado = HttpConnection.post(url, map)
+
+                        Log.d("API", resultado)
+
+                        uiThread {
+                            //Code
+                        }
+                    }
+
+                    Toast.makeText(applicationContext, "Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show()
+
+                    startActivity(Intent(applicationContext, MainActivity::class.java))
+
+                }
+
+            }
         }
 
         //Verificando se o EditText perdeu o foco
-        txtCEP.setOnFocusChangeListener{ v, hasFocus ->
+        /*txtCEP.setOnFocusChangeListener{ v, hasFocus ->
             if (!hasFocus) {
                 val cep = txtCEP.text.toString()
 
@@ -94,7 +209,7 @@ class CadastroUsuarioSegundaParteActivity : AppCompatActivity() {
                 doAsync {
 
                     //Lendo a internet e retornando o resultado em json
-                    val resultado = URL("https://viacep.com.br/ws/$cep/json/").readText()
+                    val resultado = URL(ipServidorComPorta() +"/api/v1/busca_endereco/:cep?$cep").readText()
 
                     //transformando json pra objeto
                     val retornoJson = JSONObject(resultado)
@@ -108,82 +223,11 @@ class CadastroUsuarioSegundaParteActivity : AppCompatActivity() {
 
                     //executa na Thread principal
                     uiThread {
-                        cidadeTeste.text = cidade
+                        txtBairro.setText(bairro.toString())
                     }
                 }
             }
-        }
-
-
-
-        botaoCadastrarUsuario.setOnClickListener {
-
-            var sexo = ""
-
-            //TRATAMENTOS NAS CAIXAS DE TEXTO
-            if(etDate!!.text.toString().equals("")){
-                etDate!!.setError("Esse campo é obrigatório")
-            }else if(txtTelefone.text.toString().equals("")){
-                txtTelefone.setError("Esse campo é obrigatório")
-            }else if(txtCelular.text.toString().equals("")){
-                txtCelular.setError("Esse campo é obrigatório")
-            }else if(txtCPF.text.toString().equals("")){
-                txtCPF.setError("Esse campo é obrigatório")
-            }else if(txtRG.text.toString().equals("")){
-                txtRG.setError("Esse campo é obrigatório")
-            }else if(txtCEP.text.toString().equals("")){
-                txtCEP.setError("Esse campo é obrigatório")
-            }else if(txtNumeroCasa.text.toString().equals("")){
-                txtNumeroCasa.setError("Esse campo é obrigatório")
-            }else if(txtLogradouro.text.toString().equals("")){
-                txtLogradouro.setError("Esse campo é obrigatório")
-            }else if(txtBairro.text.toString().equals("")){
-                txtBairro.setError("Esse campo é obrigatório")
-            }else if(txtComplemento.text.toString().equals("")){
-                txtComplemento.setError("Esse campo é obrigatório")
-            }else if(txtCidade.text.toString().equals("")){
-                txtCidade.setError("Esse campo é obrigatório")
-            }else if(txtEstado.text.toString().equals("")){
-                txtEstado.setError("Esse campo é obrigatório")
-            }else {
-
-                if(sexoMasc.isChecked){
-                    sexo = "M"
-                }else {
-                    sexo = "F"
-                }
-
-                doAsync {
-
-                    val url = "http://10.107.144.9:3000/api/v1/cliente"
-
-                    val map = HashMap<String, String>()
-                    map.put("nome", nomeCompleto)
-                    map.put("login", user)
-                    map.put("email", email)
-                    map.put("senha", senhaUser)
-                    map.put("datanasc", "2000-10-10")
-                    map.put("sexo", sexo)
-                   // map.put("telefone", txtTelefone.text.toString())
-                    map.put("cpf", txtCPF.text.toString())
-                    map.put("rg", txtRG.text.toString())
-
-                    val resultado = HttpConnection.post(url, map)
-
-                    Log.d("API", resultado)
-
-                    uiThread {
-                        //Code
-                    }
-                }
-
-                Toast.makeText(applicationContext, "Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show()
-
-                startActivity(Intent(applicationContext, MainActivity::class.java))
-
-            }
-
-        }
+        }*/
 
     }
 
@@ -197,7 +241,8 @@ class CadastroUsuarioSegundaParteActivity : AppCompatActivity() {
     }
 
     fun preencherCampos(usuario: Usuario){
-        etDate!!.setText(usuario.getDatanasc().toString())
+
+        etDate!!.setText(converterDataParaSistema(usuario.getDatanasc().toString()))
         txtTelefone.setText(usuario.getTelefone().toString())
         txtCelular.setText(usuario.getCelular().toString())
         txtCPF.setText(usuario.getCpf().toString())

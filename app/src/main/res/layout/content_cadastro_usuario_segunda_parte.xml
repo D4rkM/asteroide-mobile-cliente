@@ -92,7 +92,6 @@
 
             </LinearLayout>
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -171,7 +170,6 @@
                     android:textSize="13sp"
                     android:textStyle="bold"/>
 
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -220,7 +218,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="42"
-                android:hint="EX.: Rua Sé"/>
+                android:hint="EX.: Rua Sé"
+                android:digits="@string/myAlphaNumeric"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -235,7 +234,6 @@
                     android:text="Bairro:"
                     android:textSize="13sp"
                     android:textStyle="bold" />
-
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -260,14 +258,14 @@
                     android:maxLength="42"
                     android:hint="EX.: Jd Japão"/>
 
-
                 <EditText
                     android:id="@+id/txtComplemento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:maxLength="42"
-                    android:hint="EX.: Prédio 12"/>
+                    android:hint="EX.: Prédio 12"
+                    android:digits="@string/myAlphaNumeric"/>
 
             </LinearLayout>
 
@@ -285,7 +283,6 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:id="@+id/cidadeTeste"/>
-
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -309,8 +306,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:maxLength="42"
-                    android:hint="EX.: Cotia"/>
-
+                    android:hint="EX.: Cotia"
+                    android:digits="@string/myAlphaNumeric"/>
 
                 <EditText
                     android:id="@+id/txtEstado"
@@ -318,8 +315,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:maxLength="42"
-                    android:hint="EX.: São Paulo"/>
-
+                    android:hint="EX.: São Paulo"
+                    android:digits="@string/myAlphaNumeric"/>
             </LinearLayout>
 
             <Button
@@ -330,7 +327,6 @@
                 android:background="#4d9b61"
                 android:text="Cadastrar"
                 android:id="@+id/botaoCadastrarUsuario"/>
-
 
         </LinearLayout>
 

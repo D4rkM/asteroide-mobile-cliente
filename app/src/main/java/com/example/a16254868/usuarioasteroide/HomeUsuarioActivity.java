@@ -2,30 +2,42 @@ package com.example.a16254868.usuarioasteroide;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
+import models.Viagem;
+import utils.HttpConnection;
+
+import static utils.IPServidorKt.ipServidorComPorta;
+import static utils.IPServidorKt.ipServidorSemPorta;
 
 public class HomeUsuarioActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,21 +62,65 @@ public class HomeUsuarioActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
         list_view = (ListView) findViewById(R.id.list_view);
 
         List<Viagem> lstViagem = new ArrayList<>();
 
         //dados fakes
-
-        lstViagem.add(new Viagem("Rio de Janeiro"));
-        lstViagem.add(new Viagem("São Paulo"));
-        lstViagem.add(new Viagem("Gramados"));
-        lstViagem.add(new Viagem("Jardim Japão"));
-
+        /*lstViagem.add(new Viagem("Brasilia X Rio de Janeiro"));
+        lstViagem.add(new Viagem("Jd Japão X São Paulo"));
+        lstViagem.add(new Viagem("Botucatu X Gramados"));
+        lstViagem.add(new Viagem("Santos X Bahia"));*/
 
         adapter = new ViagemAdapter(this, lstViagem);
 
         list_view.setAdapter(adapter);
+
+        new AsyncTask<Void, Void, Void>(){
+
+            ArrayList<Viagem> lstViagem = new ArrayList<Viagem>();
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                String retornoJson = HttpConnection.get(ipServidorComPorta()+"/api/v1/sugestoes");
+
+                Log.d("TAG", retornoJson);
+
+                try {
+                    JSONArray jsonArray = new JSONArray(retornoJson);
+
+                    for(int i =0; i < jsonArray.length(); i++){
+
+                        JSONObject item = jsonArray.getJSONObject(i);
+
+                        Viagem c = new  Viagem(
+                                item.getInt("id"),
+                                item.getString("valor"),
+                                item.getString("nome"),
+                                item.getString("data"),
+                                item.getString("hora_saida"),
+                                item.getString("hora_chegada"),
+                                item.getString("descricao"),
+                                item.getString("imagem"));
+
+                        lstViagem.add(c);
+                    }
+
+                    Log.d("TAG", lstViagem.size()+"");
+                }catch (Exception ex){
+                    Log.e("Erro: ", ex.getMessage());
+                }
+
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                adapter.addAll(lstViagem);
+            }
+        }.execute();
 
     }
 
@@ -117,7 +173,7 @@ public class HomeUsuarioActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_compraPassagem) {
-
+            startActivity(new Intent(getApplicationContext(), CompraPassagem.class));
         } else if (id == R.id.nav_notificacao) {
 
         } else if (id == R.id.nav_acompanhamento) {
@@ -159,10 +215,23 @@ public class HomeUsuarioActivity extends AppCompatActivity
             Viagem item = getItem(position);
 
             TextView tltViagem = v.findViewById(R.id.tltViagem);
+            TextView txtValor = v.findViewById(R.id.txtValorViagem);
+
+            ImageView imagemViagem = v.findViewById(R.id.imagemViagem);
+
+            Picasso.with(getContext()).load(ipServidorSemPorta()+"/inf4m/asteroide/"+item.getImagem()).into(imagemViagem);
+
+            Log.d("IP:",ipServidorSemPorta()+"/inf4m/asteroide/"+item.getImagem());
 
             tltViagem.setText(item.getNome());
+
+            NumberFormat formato = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+
+            txtValor.setText("Apartir de "+formato.format(Double.parseDouble(item.getValor())));
 
             return v;
         }
     }
+
+
 }

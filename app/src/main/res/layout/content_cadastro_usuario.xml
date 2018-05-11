@@ -45,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:maxLength="42"
                 android:hint="Ex.: Afonso Toledo"
+                android:digits="@string/myAlphaNumeric"
                 />
 
             <TextView

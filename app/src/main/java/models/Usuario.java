@@ -1,4 +1,4 @@
-package com.example.a16254868.usuarioasteroide;
+package models;
 
 import java.io.Serializable;
 
@@ -8,16 +8,16 @@ import java.io.Serializable;
 
 public class Usuario implements Serializable{
 
-    int id = 0;
-    String nome = "";
-    String usuario = "";
-    String cpf = "";
-    String email = "";
-    String sexo = "";
-    String datanasc = "";
-    String telefone = "";
-    String celular = "";
-    String rg = "";
+    int id;
+    String nome;
+    String usuario;
+    String cpf;
+    String email;
+    String sexo;
+    String datanasc;
+    String telefone;
+    String celular;
+    String rg;
 
     public Usuario(){
 

@@ -19,12 +19,15 @@
         android:textStyle="bold"
         android:textColor="#4d9b61"/>
 
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/list_view">
+        android:id="@+id/list_view"
+        android:dividerHeight="10.0dp"
+        android:divider="@android:color/transparent">
     </ListView>
+
+
 
 
 </LinearLayout>

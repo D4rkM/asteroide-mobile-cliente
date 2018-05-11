@@ -6,7 +6,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo_app"
         android:label="Asteroide"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -33,7 +33,7 @@
         </activity>
         <activity
             android:name=".CadastroUsuarioActivity"
-            android:label="Cadastro"
+            android:label=""
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -42,7 +42,7 @@
         </activity>
         <activity
             android:name=".CadastroUsuarioSegundaParteActivity"
-            android:label="Cadastro"
+            android:label=""
             android:parentActivityName=".CadastroUsuarioActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -75,6 +75,33 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.a16254868.usuarioasteroide.HomeUsuarioActivity" />
+        </activity>
+        <activity
+            android:name=".CompraPassagem"
+            android:label="Compra de Passagem"
+            android:parentActivityName=".HomeUsuarioActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.a16254868.usuarioasteroide.HomeUsuarioActivity" />
+        </activity>
+        <activity
+            android:name=".CompraPassagemSegundoPasso"
+            android:label="Compra de Passagem"
+            android:parentActivityName=".CompraPassagem"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.a16254868.usuarioasteroide.CompraPassagem" />
+        </activity>
+        <activity
+            android:name=".CompraPassagemTerceiroPassoActivity"
+            android:label="@string/title_activity_cadastro_usuario_terceiro_passo"
+            android:parentActivityName=".CompraPassagemSegundoPasso"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.a16254868.usuarioasteroide.CompraPassagemSegundoPasso" />
         </activity>
     </application>
 
