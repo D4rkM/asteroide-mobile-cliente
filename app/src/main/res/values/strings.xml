@@ -28,4 +28,7 @@
     <string name="title_activity_cadastro_usuario_terceiro_passo">
         CadastroUsuarioTerceiroPassoActivity
     </string>
+    <string name="title_activity_adicionar_pessoas_poltrona">AdicionarPessoasPoltronaActivity
+    </string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".AdicionarPessoasPoltronaActivity"
+    tools:showIn="@layout/activity_adicionar_pessoas_poltrona"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Adicione dados as poltronas"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="#4d9b61"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Poltronas"
+        android:textColor="#4d9b61"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/list_view_poltronas"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0dp"
+        android:layout_margin="10dp"></ListView>
+
+
+
+</LinearLayout>

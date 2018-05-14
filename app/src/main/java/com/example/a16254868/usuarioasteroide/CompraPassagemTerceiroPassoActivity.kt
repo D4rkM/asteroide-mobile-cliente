@@ -2,6 +2,7 @@ package com.example.a16254868.usuarioasteroide
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -37,13 +38,14 @@ class CompraPassagemTerceiroPassoActivity : AppCompatActivity() {
         }
 
         val cal = Calendar.getInstance()
-        var year = 2018
-        var arrayAnos = arrayOf(0)
+        var year = cal.get(Calendar.YEAR)
+        var arrayAnos = mutableListOf<Int>()
 
-        while (year < year + 50){
-            arrayAnos = arrayAnos + year
 
-            year = year + 1
+        for( i in year..2030 ){
+
+            arrayAnos.add(i)
+
         }
 
         if (spinnerAnoValidade != null) {

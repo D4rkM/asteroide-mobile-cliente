@@ -1,9 +1,13 @@
 package com.example.a16254868.usuarioasteroide
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.widget.GridView
 import kotlinx.android.synthetic.main.activity_compra_passagem_segundo_passo.*
+import models.Poltrona
 import org.jetbrains.anko.toast
 
 class CompraPassagemSegundoPasso : AppCompatActivity() {
@@ -19,137 +23,107 @@ class CompraPassagemSegundoPasso : AppCompatActivity() {
         setContentView(R.layout.activity_compra_passagem_segundo_passo)
         setSupportActionBar(toolbar)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val gridview: GridView = findViewById(R.id.gridview)
 
-        var adapter =  GridAdapter (applicationContext, retornaArrayImagens(500))
+        var adapter = GridAdapter()
+
+        var poltrona = Poltrona()
+
+        var cor = intArrayOf()
+
+        var arrayNumeroPoltrona = intArrayOf()
+
+        var numerosPoltronas = 35
+
+        var x = 1
+
+        while (x <= numerosPoltronas){
+
+            arrayNumeroPoltrona = arrayNumeroPoltrona + x
+            cor = cor + 0
+
+            x = x + 1
+
+        }
+
+        poltrona = Poltrona(arrayNumeroPoltrona, cor)
+
+        adapter =  GridAdapter (applicationContext, poltrona)
 
         gridview.setAdapter(adapter)
 
         gridview.setOnItemClickListener { adapterView, view, i, l ->
-            toast(i.toString())
 
-            adapter =  GridAdapter (applicationContext, retornaArrayImagens(i))
+            x = 0
+
+            while (x < numerosPoltronas){
+
+                    if(x == i){//verificando se é a poltrona que foi selecionada
+
+                        if(cor[i] == 0){
+
+                            arrayNumeroPoltrona[i] = x+1
+                            cor[i] = 1
+
+                        }else if(cor[i] == 1){
+
+                            arrayNumeroPoltrona[i] = x+1
+                            cor[i] = 0
+
+                        }
+                    }
+
+                x = x + 1
+
+            }
+
+            poltrona = Poltrona(arrayNumeroPoltrona, cor)
+            adapter =  GridAdapter (applicationContext, poltrona)
+
             gridview.setAdapter(adapter)
 
-            //startActivity(Intent(applicationContext, CompraPassagemTerceiroPassoActivity::class.java) )
-
         }
 
-        /*gridview.adapter = ImageAdapter(this, 500)//500 é um número padrão para o position quando for iniciado o sistema
+        fab.setOnClickListener { view ->
 
-        gridview.onItemClickListener =
-                AdapterView.OnItemClickListener { parent, v, position, id ->
-                    Toast.makeText(this, "$position", Toast.LENGTH_SHORT).show()
-                    gridview.adapter = ImageAdapter(this, position)
-                }*/
+            var arrayPoltronasSelecionas = intArrayOf()
 
-    }
+            x = 0
 
-    fun retornaArrayImagens(position: Int) : Poltrona{
+                while (x < numerosPoltronas){
 
-        var poltrona = Poltrona()
-
-        var x = 0
-
-        while (x <= 3){
-
-            if(x != position){//verificando se a poltrona está selecionada
-                poltrona = Poltrona(R.drawable.square_green, x)
-            }else{//verificando se a poltrona foi selecionada
-                poltrona = Poltrona(R.drawable.square_red, x)
-            }
-
-            x = x + 1
-
-        }
-
-        return poltrona
-
-
-        /*var x = 0
-
-        var arrayImagens = arrayOf<Int>()
-        var arrayNumeros = arrayOf<Int>()
-
-        var green = R.drawable.square_green//quando a poltrona estiver livre
-        var red = R.drawable.square_red//quando a poltrona estiver ocupada
-        var yellow = R.drawable.square_yellow//quando a poltrona for selecionada
-
-        while (x <= 10){
-
-            if(x != position){//verificando se a poltrona está selecionada
-                arrayImagens = arrayImagens + green
-                arrayNumeros = arrayNumeros + x
-            }else{//verificando se a poltrona foi selecionada
-                arrayImagens = arrayImagens + yellow
-                arrayNumeros = arrayNumeros + x
-            }
-
-            x = x + 1
-
-        }
-
-        return arrayOf(arrayImagens, arrayNumeros)*/
-    }
-
-    /*class ImageAdapter(private val mContext: Context, val position: Int) : BaseAdapter() {
-
-        fun retornaArrayImagens(position: Int) : Array<Int>{
-            var x = 0
-
-            var array = arrayOf<Int>()
-
-            var green = R.drawable.square_green//quando a poltrona estiver livre
-            var red = R.drawable.square_red//quando a poltrona estiver ocupada
-            var yellow = R.drawable.square_yellow//quando a poltrona for selecionada
-
-            while (x < 32){
-
-                if(x != position){//verificando se a poltrona está selecionada
-                    array = array + green
-
-                }else{//verificando se a poltrona foi selecionada
-                    array = array + yellow
-
+                if(cor[x] == 1){
+                    arrayPoltronasSelecionas =  arrayPoltronasSelecionas + (x + 1)
                 }
 
                 x = x + 1
 
             }
 
-            return array
-        }
+            if(arrayPoltronasSelecionas.size == 1){
+                intent = Intent(applicationContext, CompraPassagemTerceiroPassoActivity::class.java)
 
-        val imagens = retornaArrayImagens(position)
+                intent.putExtra("poltronasSelecionadas", arrayPoltronasSelecionas)
 
-        override fun getCount(): Int = imagens.size
+                startActivity(intent)
+            }else if(arrayPoltronasSelecionas.size > 1){
+                intent = Intent(applicationContext, AdicionarPessoasPoltronaActivity::class.java)
 
-        override fun getItem(position: Int): Any? = null
+                intent.putExtra("poltronasSelecionadas", arrayPoltronasSelecionas)
 
-        override fun getItemId(position: Int): Long = 0L
-
-        // create a new ImageView for each item referenced by the Adapter
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            val imageView: ImageView
-            if (convertView == null) {
-                // if it's not recycled, initialize some attributes
-                imageView = ImageView(mContext)
-                imageView.layoutParams = ViewGroup.LayoutParams(250, 250)
-                imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-                imageView.setPadding(8, 8, 8, 8)
-            } else {
-                imageView = convertView as ImageView
+                startActivity(intent)
+            }else{
+                toast("Selecione no mínimo uma poltrona")
             }
 
-            if (convertView == null) {
-                inflater
-            }
 
-            imageView.setImageResource(imagens[position])
-            return imageView
+
         }
-    }*/
+
+    }
+
+
 }

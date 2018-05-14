@@ -7,10 +7,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_compra_passagem.*
 import kotlinx.android.synthetic.main.content_compra_passagem.*
 import java.text.NumberFormat
@@ -29,6 +27,7 @@ class CompraPassagem : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 
         val lstPassagem = ArrayList<String>()
 
@@ -90,7 +89,21 @@ class CompraPassagem : AppCompatActivity() {
 
             startActivity(Intent(applicationContext, CompraPassagemSegundoPasso::class.java))
         })
+
+        buscarPassagem.setOnClickListener{//DEIXA ITENS VISIVEIS E INVISIVEIS
+            linearCompraPassagem.visibility = LinearLayout.GONE
+            linearBtnBuscarNovamente.visibility = LinearLayout.VISIBLE
+            linearPassagens.visibility = LinearLayout.VISIBLE
+        }
+
+        buscarPassagemNovamente.setOnClickListener{//DEIXA ITENS VISIVEIS E INVISIVEIS
+            linearCompraPassagem.visibility = LinearLayout.VISIBLE
+            linearBtnBuscarNovamente.visibility = LinearLayout.GONE
+            linearPassagens.visibility = LinearLayout.GONE
+        }
     }
+
+
 
     //classe do adapter
     private inner class PassagemAdapter(ctx: Context, items: List<String>) : ArrayAdapter<String>(ctx, 0, items) {

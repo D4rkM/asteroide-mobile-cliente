@@ -77,7 +77,7 @@ public class HomeUsuarioActivity extends AppCompatActivity
 
         list_view.setAdapter(adapter);
 
-        new AsyncTask<Void, Void, Void>(){
+        /*new AsyncTask<Void, Void, Void>(){
 
             ArrayList<Viagem> lstViagem = new ArrayList<Viagem>();
 
@@ -120,7 +120,7 @@ public class HomeUsuarioActivity extends AppCompatActivity
                 super.onPostExecute(aVoid);
                 adapter.addAll(lstViagem);
             }
-        }.execute();
+        }.execute();*/
 
     }
 
