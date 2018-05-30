@@ -7,7 +7,7 @@ package utils
 fun ipServidorComPorta():String{
 
     //var ip = "http://10.107.144.4:3000"
-    var ip = "http://10.0.2.2:3000"
+    var ip = "http://192.168.0.1:3000"
 
     return ip
 }
@@ -15,7 +15,13 @@ fun ipServidorComPorta():String{
 fun ipServidorSemPorta():String{
 
     //var ip = "http://10.107.1449.4"
-    var ip = "http://10.0.2.2"
+    var ip = "http://192.168.0.1"
+
+    return ip
+}
+
+fun ipServidorBlog():String{
+    var ip = "http://10.0.2.2/inf4m/asteroide/views/interacao.php"
 
     return ip
 }

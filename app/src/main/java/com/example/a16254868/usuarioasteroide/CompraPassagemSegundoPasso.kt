@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.widget.GridView
 import kotlinx.android.synthetic.main.activity_compra_passagem_segundo_passo.*
+import kotlinx.android.synthetic.main.content_adicionar_dados_pessoa_poltrona.*
 import models.Poltrona
 import org.jetbrains.anko.toast
 
@@ -23,8 +24,10 @@ class CompraPassagemSegundoPasso : AppCompatActivity() {
         setContentView(R.layout.activity_compra_passagem_segundo_passo)
         setSupportActionBar(toolbar)
 
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+
+        val arrayNumPoltronaComNomePosition = intent.getIntArrayExtra("arrayNumPoltronaComNomePosition")
 
         val gridview: GridView = findViewById(R.id.gridview)
 
@@ -103,19 +106,25 @@ class CompraPassagemSegundoPasso : AppCompatActivity() {
 
             }
 
-            if(arrayPoltronasSelecionas.size == 1){
+            if(arrayPoltronasSelecionas.size >= 1){
                 intent = Intent(applicationContext, CompraPassagemTerceiroPassoActivity::class.java)
 
                 intent.putExtra("poltronasSelecionadas", arrayPoltronasSelecionas)
 
                 startActivity(intent)
-            }else if(arrayPoltronasSelecionas.size > 1){
+            }/*else if(arrayPoltronasSelecionas.size > 1){
                 intent = Intent(applicationContext, AdicionarPessoasPoltronaActivity::class.java)
 
                 intent.putExtra("poltronasSelecionadas", arrayPoltronasSelecionas)
+                intent.putExtra("nome", "Adicionar Passageiro")
+                intent.putExtra("poltrona", "8000")
+                intent.putExtra("primeiraPoltrona", "0")
+                intent.putExtra("segundaPoltrona", "1")
+
+                intent.putExtra("arrayNumPoltronaComNomePosition", arrayNumPoltronaComNomePosition)
 
                 startActivity(intent)
-            }else{
+            }*/else{
                 toast("Selecione no mínimo uma poltrona")
             }
 

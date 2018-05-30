@@ -232,7 +232,7 @@ class CadastroUsuarioSegundaParteActivity : AppCompatActivity() {
     }
 
     //METODO PARA CRIAR MASCARAS PARA AS CAIXAS DE TEXTO
-    fun mascaras(){
+    public fun mascaras(){
         txtTelefone.addTextChangedListener(MaskEditUtil.mask(txtTelefone, "### ####-####"))
         txtCelular.addTextChangedListener(MaskEditUtil.mask(txtCelular, "### #####-####"))
         txtCPF.addTextChangedListener(MaskEditUtil.mask(txtCPF, "###.###.###-##"))

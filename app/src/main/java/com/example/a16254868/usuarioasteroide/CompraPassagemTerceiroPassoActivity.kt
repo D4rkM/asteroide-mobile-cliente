@@ -8,6 +8,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.activity_cadastro_usuario_terceiro_passo.*
 import kotlinx.android.synthetic.main.content_cadastro_usuario_terceiro_passo.*
+import utils.retornaMêsValidadeCartao
+import utils.retornarAnoValidadeCartao
 import java.util.*
 
 class CompraPassagemTerceiroPassoActivity : AppCompatActivity() {
@@ -19,9 +21,9 @@ class CompraPassagemTerceiroPassoActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val meses = arrayOf("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro")
+
         if (spinnerMesValidade != null) {
-            val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, meses)
+            val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, retornaMêsValidadeCartao())
             spinnerMesValidade.adapter = arrayAdapter
 
             spinnerMesValidade.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -37,19 +39,8 @@ class CompraPassagemTerceiroPassoActivity : AppCompatActivity() {
             }
         }
 
-        val cal = Calendar.getInstance()
-        var year = cal.get(Calendar.YEAR)
-        var arrayAnos = mutableListOf<Int>()
-
-
-        for( i in year..2030 ){
-
-            arrayAnos.add(i)
-
-        }
-
         if (spinnerAnoValidade != null) {
-            val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, arrayAnos)
+            val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, retornarAnoValidadeCartao())
             spinnerAnoValidade.adapter = arrayAdapter
 
             spinnerAnoValidade.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

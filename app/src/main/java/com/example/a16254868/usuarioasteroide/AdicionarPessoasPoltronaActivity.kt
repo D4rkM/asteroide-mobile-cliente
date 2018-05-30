@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,13 +16,13 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_adicionar_pessoas_poltrona.*
 import kotlinx.android.synthetic.main.content_adicionar_pessoas_poltrona.*
 import kotlinx.android.synthetic.main.content_compra_passagem.*
+import kotlinx.android.synthetic.main.item_poltronas_dados_usuario.*
 import org.jetbrains.anko.toast
 import java.text.NumberFormat
 import java.util.*
 
 class AdicionarPessoasPoltronaActivity : AppCompatActivity() {
 
-    //ARRUUUUUUUUUUUUUUUMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR AAAAAA LISTAGEM DEEEEEEEEEE POLTRONAAAAAAAAAAAAAAS SELECIONADAAAAAAAAAAAAAAAAAAAAS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_adicionar_pessoas_poltrona)
@@ -31,13 +32,17 @@ class AdicionarPessoasPoltronaActivity : AppCompatActivity() {
 
         var intent = intent
 
-        val pol = intent.getIntArrayExtra("poltronasSelecionadas")
+        var pol = intent.getIntArrayExtra("poltronasSelecionadas")
+
+        var nome = intent.getStringExtra("nome")
+
+        var numPoltrona = intent.getStringExtra("poltrona")
 
         val lstPoltrona = ArrayList<String>()
 
         var x = 0
 
-        var adapter = PoltronaAdpter(this, lstPoltrona, x)//OOOOOOO VALOOOOOOOOOOOOOOR QUEEEEEEE ESTA VINDOOOOOOOOOOOO É O X DE CIMA E NÃO O DO WHILEEEEEEEEEEEEEEEEEEE
+        var adapter = PoltronaAdpter(this, lstPoltrona, pol, nome, numPoltrona)
 
         while (x < pol.size){
 
@@ -47,14 +52,19 @@ class AdicionarPessoasPoltronaActivity : AppCompatActivity() {
 
             x = x + 1
         }
-
     }
 
-
     //classe do adapter
-    private inner class PoltronaAdpter(ctx: Context, items: List<String>, x:Int) : ArrayAdapter<String>(ctx, 0, items) {
+    private inner class PoltronaAdpter(ctx: Context, items: List<String>, pol:IntArray, nome:String, numPoltrona:String) : ArrayAdapter<String>(ctx, 0, items) {
 
-        var poltronas = x
+        var poltronasSelecionadas = pol
+
+        var nomeUsuario = nome
+
+        var numPoltrona = numPoltrona
+
+        var arrayNumPoltronaComNomePosition = intArrayOf()
+        var arrayNomePoltrona = mutableListOf<String>()
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
@@ -71,8 +81,48 @@ class AdicionarPessoasPoltronaActivity : AppCompatActivity() {
 
             txtPoltronaNum.setText("Número da poltrona: " + item)
 
-            if(poltronas == 0){
+            if(!nomeUsuario.equals("Adicionar Passageiro")) {
+
+                var t = 0
+
+                while (t < poltronasSelecionadas.size) {
+
+                    if (item.toInt() == numPoltrona.toInt()) {
+                        txtAddPessoa.setText(nomeUsuario)
+
+                        arrayNumPoltronaComNomePosition = arrayNumPoltronaComNomePosition + position
+                    }
+
+                    if (position == arrayNumPoltronaComNomePosition[t]) {
+                        txtAddPessoa.setText("funcionou")
+                    }
+
+                    t = t + 1
+                }
+            }
+
+
+
+            txtAddPessoa.setOnClickListener{
+
+                if(position == 0){
+                    toast("Essa poltrona já tem uma pessoa")
+                }else{
+                    intent = Intent(applicationContext, AdicionarDadosPessoaPoltronaActivity::class.java)
+
+                    intent.putExtra("poltronasSelecionadas", poltronasSelecionadas)
+                    intent.putExtra("poltrona", item.toString())
+                    intent.putExtra("arrayNumPoltronaComNomePosition", arrayNumPoltronaComNomePosition)
+
+                    startActivity(intent)
+                }
+
+            }
+
+            if(position == 0){
+
                 txtAddPessoa.setText("Usuário atual")
+
             }
 
             return v

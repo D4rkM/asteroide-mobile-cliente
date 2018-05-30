@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
             val login = txtLoginUsuario.text.toString()
             val senha = txtSenhaUsuario.text.toString()
 
-           /*repetirUsuario(login, senha, applicationContext){
+           repetirUsuario(login, senha, applicationContext){
                 usuario = it
 
                 preferencias.edit().putString("login", login).apply()
@@ -35,11 +35,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
 
                 finish()
-            }*/
-
-            val intent = Intent(applicationContext, HomeUsuarioActivity::class.java)
-
-            startActivity(intent)
+            }
         }
 
         botaoCadastrar.setOnClickListener {

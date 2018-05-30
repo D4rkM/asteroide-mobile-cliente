@@ -34,7 +34,6 @@
         <activity
             android:name=".CadastroUsuarioActivity"
             android:label=""
-            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -106,6 +105,15 @@
         <activity
             android:name=".AdicionarPessoasPoltronaActivity"
             android:label="Definir usuário "
+            android:parentActivityName=".AdicionarPessoasPoltronaActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.a16254868.usuarioasteroide.CompraPassagemSegundoPasso" />
+        </activity>
+        <activity
+            android:name=".AdicionarDadosPessoaPoltronaActivity"
+            android:label="Adicionar dados da pessoa"
             android:parentActivityName=".CompraPassagemSegundoPasso"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
