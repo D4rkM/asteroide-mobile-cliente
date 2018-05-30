@@ -55,53 +55,51 @@
                 android:layout_height="wrap_content"
                 android:hint="Ex.: Rio de Janeiro" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="Data de partida"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"/>
 
-                <TextView
+                <!--<TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Data de volta"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone"/>-->
 
-            </LinearLayout>
-
-            <LinearLayout
+           <!-- <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal">-->
 
                 <EditText
                     android:id="@+id/dataPartida"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:clickable="true"
                     android:focusable="false"
-                    android:hint="Ex.: 20/10/1999" />
+                    android:hint="Ex.: 20/10/1999"
+                    android:layout_gravity="center_horizontal"/>
 
-                <EditText
+                <!--<EditText
                     android:id="@+id/dataVolta"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:clickable="true"
                     android:focusable="false"
-                    android:hint="Ex.: 20/10/1999" />
+                    android:hint="Ex.: 20/10/1999"
+                    android:visibility="gone"/>
 
-            </LinearLayout>
+            </LinearLayout>-->
 
             <Button
                 android:layout_width="169dp"
@@ -113,6 +111,17 @@
                 android:id="@+id/buscarPassagem"/>
 
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Não há nenhuma viagem com esses requerimentos no momento"
+            android:textSize="16dp"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:visibility="gone"
+            android:id="@+id/txtSemViagem"/>
 
         <LinearLayout
             android:layout_width="match_parent"

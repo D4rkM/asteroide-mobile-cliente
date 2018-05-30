@@ -9,7 +9,10 @@ import android.widget.GridView
 import kotlinx.android.synthetic.main.activity_compra_passagem_segundo_passo.*
 import kotlinx.android.synthetic.main.content_adicionar_dados_pessoa_poltrona.*
 import models.Poltrona
+import models.Viagem
 import org.jetbrains.anko.toast
+import utils.poltronasSelecionadas
+import utils.repetirViagem
 
 class CompraPassagemSegundoPasso : AppCompatActivity() {
 
@@ -19,6 +22,8 @@ class CompraPassagemSegundoPasso : AppCompatActivity() {
     //internal var imagemList = intArrayOf(R.drawable.square_green, R.drawable.square_green)
     lateinit var imagemList:IntArray
 
+    var arrayPoltronasSelecionadasNum = intArrayOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_compra_passagem_segundo_passo)
@@ -26,8 +31,9 @@ class CompraPassagemSegundoPasso : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        var viagem = Viagem()
 
-        val arrayNumPoltronaComNomePosition = intent.getIntArrayExtra("arrayNumPoltronaComNomePosition")
+        val idViagem = intent.getStringExtra("id")
 
         val gridview: GridView = findViewById(R.id.gridview)
 
@@ -39,30 +45,51 @@ class CompraPassagemSegundoPasso : AppCompatActivity() {
 
         var arrayNumeroPoltrona = intArrayOf()
 
-        var numerosPoltronas = 35
+        var numerosPoltronas = 0
 
-        var x = 1
+        repetirViagem(idViagem, applicationContext){
+            viagem  = it
 
-        while (x <= numerosPoltronas){
+            numerosPoltronas = viagem.getPoltronas().toInt()
 
-            arrayNumeroPoltrona = arrayNumeroPoltrona + x
-            cor = cor + 0
+            poltronasSelecionadas(idViagem, applicationContext){
+                var x = 0
+                while (x <= 50){
+                    arrayPoltronasSelecionadasNum[x] = it
+                }
 
-            x = x + 1
+            }
 
-        }
+            toast(arrayPoltronasSelecionadasNum.toString())
 
-        poltrona = Poltrona(arrayNumeroPoltrona, cor)
+            var x = 1
 
-        adapter =  GridAdapter (applicationContext, poltrona)
+            while (x <= numerosPoltronas){
 
-        gridview.setAdapter(adapter)
+                if(arrayPoltronasSelecionadasNum[x] != x){
+                    arrayNumeroPoltrona = arrayNumeroPoltrona + x
+                    cor = cor + 0
 
-        gridview.setOnItemClickListener { adapterView, view, i, l ->
+                }else{
+                    arrayNumeroPoltrona = arrayNumeroPoltrona + x
+                    cor = cor + 2
+                }
 
-            x = 0
+                x = x + 1
 
-            while (x < numerosPoltronas){
+            }
+
+            poltrona = Poltrona(arrayNumeroPoltrona, cor)
+
+            adapter =  GridAdapter (applicationContext, poltrona)
+
+            gridview.setAdapter(adapter)
+
+            gridview.setOnItemClickListener { adapterView, view, i, l ->
+
+                x = 0
+
+                while (x < numerosPoltronas){
 
                     if(x == i){//verificando se é a poltrona que foi selecionada
 
@@ -79,60 +106,45 @@ class CompraPassagemSegundoPasso : AppCompatActivity() {
                         }
                     }
 
-                x = x + 1
+                    x = x + 1
+
+                }
+
+                poltrona = Poltrona(arrayNumeroPoltrona, cor)
+                adapter =  GridAdapter (applicationContext, poltrona)
+
+                gridview.setAdapter(adapter)
 
             }
 
-            poltrona = Poltrona(arrayNumeroPoltrona, cor)
-            adapter =  GridAdapter (applicationContext, poltrona)
+            fab.setOnClickListener { view ->
 
-            gridview.setAdapter(adapter)
+                var arrayPoltronasSelecionas = intArrayOf()
 
-        }
-
-        fab.setOnClickListener { view ->
-
-            var arrayPoltronasSelecionas = intArrayOf()
-
-            x = 0
+                x = 0
 
                 while (x < numerosPoltronas){
 
-                if(cor[x] == 1){
-                    arrayPoltronasSelecionas =  arrayPoltronasSelecionas + (x + 1)
+                    if(cor[x] == 1){
+                        arrayPoltronasSelecionas =  arrayPoltronasSelecionas + (x + 1)
+                    }
+
+                    x = x + 1
+
                 }
 
-                x = x + 1
+                if(arrayPoltronasSelecionas.size >= 1){
+                    intent = Intent(applicationContext, CompraPassagemTerceiroPassoActivity::class.java)
 
+                    intent.putExtra("quantidadePoltronas", arrayPoltronasSelecionas.size.toString())
+                    intent.putExtra("poltronasSelecionadas", arrayPoltronasSelecionas)
+                    intent.putExtra("id", idViagem)
+
+                    startActivity(intent)
+                }else{
+                    toast("Selecione no mínimo uma poltrona")
+                }
             }
-
-            if(arrayPoltronasSelecionas.size >= 1){
-                intent = Intent(applicationContext, CompraPassagemTerceiroPassoActivity::class.java)
-
-                intent.putExtra("poltronasSelecionadas", arrayPoltronasSelecionas)
-
-                startActivity(intent)
-            }/*else if(arrayPoltronasSelecionas.size > 1){
-                intent = Intent(applicationContext, AdicionarPessoasPoltronaActivity::class.java)
-
-                intent.putExtra("poltronasSelecionadas", arrayPoltronasSelecionas)
-                intent.putExtra("nome", "Adicionar Passageiro")
-                intent.putExtra("poltrona", "8000")
-                intent.putExtra("primeiraPoltrona", "0")
-                intent.putExtra("segundaPoltrona", "1")
-
-                intent.putExtra("arrayNumPoltronaComNomePosition", arrayNumPoltronaComNomePosition)
-
-                startActivity(intent)
-            }*/else{
-                toast("Selecione no mínimo uma poltrona")
-            }
-
-
-
         }
-
     }
-
-
 }

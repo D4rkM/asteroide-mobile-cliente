@@ -7,21 +7,27 @@ package utils
 fun ipServidorComPorta():String{
 
     //var ip = "http://10.107.144.4:3000"
-    var ip = "http://192.168.0.1:3000"
+
+    //var ip = "http://192.168.0.1:3000"
+
+    var ip = "http://10.0.2.2:3000"
 
     return ip
 }
 
 fun ipServidorSemPorta():String{
 
-    //var ip = "http://10.107.1449.4"
-    var ip = "http://192.168.0.1"
+    //var ip = "http://10.107.144.4"
+
+    //var ip = "http://192.168.0.1"
+
+    var ip = "http://10.0.2.2"
 
     return ip
 }
 
 fun ipServidorBlog():String{
-    var ip = "http://10.0.2.2/inf4m/asteroide/views/interacao.php"
+    var ip = "http://www.voudeasteroide.com.br/views/interacao.php"
 
     return ip
 }

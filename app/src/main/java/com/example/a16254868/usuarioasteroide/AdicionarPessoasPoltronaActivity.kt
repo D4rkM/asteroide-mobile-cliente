@@ -101,8 +101,6 @@ class AdicionarPessoasPoltronaActivity : AppCompatActivity() {
                 }
             }
 
-
-
             txtAddPessoa.setOnClickListener{
 
                 if(position == 0){

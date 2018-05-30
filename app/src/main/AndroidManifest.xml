@@ -120,6 +120,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.a16254868.usuarioasteroide.CompraPassagemSegundoPasso" />
         </activity>
+        <activity
+            android:name=".DetalhesViagemActivity"
+            android:label="Detalhes Da Viagem"
+            android:parentActivityName=".HomeUsuarioActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.a16254868.usuarioasteroide.HomeUsuarioActivity" />
+        </activity>
     </application>
 
 </manifest>

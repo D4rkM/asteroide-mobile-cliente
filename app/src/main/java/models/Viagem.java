@@ -8,27 +8,39 @@ public class Viagem {
 
     private int id;
     private String valor;
-    private String data;
     private String horaPartida;
     private String horaChegada;
+    private String dataPartida;
+    private String dataChegada;
     private String imagem;
-    private String descricao;
     private String km;
+    private String enderecoChegada;
+    private String enderecoSaida;
     private String sugestao;
-    private String nome;
+    private String origem;
+    private String destino;
+    private String tipo_classe;
+    private String poltronas;
 
     public Viagem(){}
 
-    public Viagem(int id, String valor, String nome, String data, String horaPartida, String horaChegada, String descricao,
-                  String imagem) {
+    public Viagem(int id, String valor, String origem, String destino, String horaPartida, String horaChegada, String dataPartida, String dataChegada, String km,
+                  String enderecoChegada, String enderecoSaida,
+                  String imagem, String tipo_classe, String poltronas) {
         this.id = id;
         this.valor = valor;
-        this.nome = nome;
-        this.data = data;
+        this.origem = origem;
+        this.destino = destino;
         this.horaPartida = horaPartida;
         this.horaChegada = horaChegada;
-        this.descricao = descricao;
+        this.dataPartida = dataPartida;
+        this.dataChegada = dataChegada;
+        this.km = km;
+        this.enderecoChegada = enderecoChegada;
+        this.enderecoSaida = enderecoSaida;
         this.imagem = imagem;
+        this.tipo_classe = tipo_classe;
+        this.poltronas = poltronas;
     }
 
     public int getId() {
@@ -45,14 +57,6 @@ public class Viagem {
 
     public void setValor(String valor) {
         this.valor = valor;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
     }
 
     public String getHoraPartida() {
@@ -79,14 +83,6 @@ public class Viagem {
         this.imagem = imagem;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
     public String getKm() {
         return km;
     }
@@ -103,11 +99,69 @@ public class Viagem {
         this.sugestao = sugestao;
     }
 
-    public String getNome() {
-        return nome;
+    public String getOrigem() {
+        return origem;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setOrigem(String origem) {
+        this.origem = origem;
     }
+
+    public String getDestino() {
+        return destino;
+    }
+
+    public void setDestino(String destino) {
+        this.destino = destino;
+    }
+
+    public String getTipo_classe() {
+        return tipo_classe;
+    }
+
+    public void setTipo_classe(String tipo_classe) {
+        this.tipo_classe = tipo_classe;
+    }
+
+    public String getPoltronas() {
+        return poltronas;
+    }
+
+    public void setPoltronas(String poltronas) {
+        this.poltronas = poltronas;
+    }
+
+    public String getEnderecoChegada() {
+        return enderecoChegada;
+    }
+
+    public void setEnderecoChegada(String enderecoChegada) {
+        this.enderecoChegada = enderecoChegada;
+    }
+
+    public String getEnderecoSaida() {
+        return enderecoSaida;
+    }
+
+    public void setEnderecoSaida(String enderecoSaida) {
+        this.enderecoSaida = enderecoSaida;
+    }
+
+    public String getDataPartida() {
+        return dataPartida;
+    }
+
+    public void setDataPartida(String dataPartida) {
+        this.dataPartida = dataPartida;
+    }
+
+    public String getDataChegada() {
+        return dataChegada;
+    }
+
+    public void setDataChegada(String dataChegada) {
+        this.dataChegada = dataChegada;
+    }
+
+
 }

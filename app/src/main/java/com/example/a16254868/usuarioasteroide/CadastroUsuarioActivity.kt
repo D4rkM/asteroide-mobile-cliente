@@ -4,13 +4,25 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_cadastro_usuario.*
 import kotlinx.android.synthetic.main.content_cadastro_usuario.*
 import models.Usuario
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.toast
+import org.jetbrains.anko.uiThread
+import org.json.JSONArray
+import utils.HttpConnection
+import utils.ipServidorComPorta
 import utils.repetirUsuario
+import android.text.Editable
+import android.text.TextWatcher
+
+
 
 class CadastroUsuarioActivity : AppCompatActivity() {
-
+    var userExistente = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_usuario)
@@ -26,6 +38,54 @@ class CadastroUsuarioActivity : AppCompatActivity() {
         val senha = preferencias.getString("senha", "")
 
         var usuario = Usuario()
+
+
+        txtUser.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+                //aqui você executa uma determinada ação antes da modificação do editText
+
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+
+                doAsync {
+
+                    val url = ipServidorComPorta() +"/api/v1/buscaruser/cliente"
+
+                    val map = HashMap<String, String>()
+                    map.put("login", txtUser.text.toString())
+
+                    val resultado = HttpConnection.post(url, map)
+
+                    Log.d("API", resultado)
+
+                    uiThread {
+
+                        val jsonarray = JSONArray(resultado)
+
+                        //Verificando se a senha ou usuário estão corretas
+                        if(!jsonarray.isNull(0)){
+
+
+                            userExistente = true
+
+                            toast(userExistente.toString())
+                        }else{
+                            userExistente = false
+                        }
+                    }
+                }
+
+            }
+
+            override fun afterTextChanged(s: Editable) {
+
+                //aqui você executa uma determinada ação depois da modificação do editText
+
+            }
+        })
+
 
         if(tela.equals("perfil")){
             tltTelaCadastroPefil.text = "Seu Perfil"
@@ -47,6 +107,8 @@ class CadastroUsuarioActivity : AppCompatActivity() {
 
     fun botãoCadastroPefil(tela:String){
 
+
+
         if(tela.equals("Cadastro")){
             btnContinuarCadastro.setOnClickListener {
 
@@ -62,7 +124,7 @@ class CadastroUsuarioActivity : AppCompatActivity() {
                     txtConfirmarSenhaUser.setError("As senhas não condizem")
                 }else if(txtEmailUser.text.toString().equals("")){
                     txtEmailUser.setError("Esse campo é obrigatório")
-                }else{
+                }else if(userExistente == false){
 
                     intent = Intent(this, CadastroUsuarioSegundaParteActivity::class.java)
 
@@ -76,6 +138,8 @@ class CadastroUsuarioActivity : AppCompatActivity() {
                     startActivity(intent)
 
                     finish()
+                }else{
+                    txtUser.setError("Usuário Existente")
                 }
             }
         }else{

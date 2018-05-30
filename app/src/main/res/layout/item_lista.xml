@@ -22,7 +22,7 @@
 
         <TextView
             android:id="@+id/tltViagem"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="Brasilia X Rio de Janeiro"
             android:textColor="#4d9b61"
@@ -35,11 +35,11 @@
 
         <TextView
             android:id="@+id/txtValorViagem"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="Apartir de R$ 230,00"
             android:textColor="#4d9b61"
-            android:textSize="13sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:gravity="center_vertical"
             android:layout_marginLeft="10dp"

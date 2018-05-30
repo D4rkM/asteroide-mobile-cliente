@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -36,6 +37,7 @@ import java.util.Locale;
 import models.Viagem;
 import utils.HttpConnection;
 
+import static utils.ConverterDinheiroKt.converterDinheiro;
 import static utils.IPServidorKt.ipServidorComPorta;
 import static utils.IPServidorKt.ipServidorSemPorta;
 
@@ -62,22 +64,15 @@ public class HomeUsuarioActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         list_view = (ListView) findViewById(R.id.list_view);
 
         List<Viagem> lstViagem = new ArrayList<>();
-
-        //dados fakes
-        /*lstViagem.add(new Viagem("Brasilia X Rio de Janeiro"));
-        lstViagem.add(new Viagem("Jd Japão X São Paulo"));
-        lstViagem.add(new Viagem("Botucatu X Gramados"));
-        lstViagem.add(new Viagem("Santos X Bahia"));*/
 
         adapter = new ViagemAdapter(this, lstViagem);
 
         list_view.setAdapter(adapter);
 
-        /*new AsyncTask<Void, Void, Void>(){
+        new AsyncTask<Void, Void, Void>(){
 
             ArrayList<Viagem> lstViagem = new ArrayList<Viagem>();
 
@@ -97,13 +92,19 @@ public class HomeUsuarioActivity extends AppCompatActivity
 
                         Viagem c = new  Viagem(
                                 item.getInt("id"),
-                                item.getString("valor"),
-                                item.getString("nome"),
-                                item.getString("data"),
+                                item.getString("preco"),
+                                item.getString("origem"),
+                                item.getString("destino"),
                                 item.getString("hora_saida"),
                                 item.getString("hora_chegada"),
-                                item.getString("descricao"),
-                                item.getString("imagem"));
+                                item.getString("data_saida").substring(0, 10),
+                                item.getString("data_chegada").substring(0, 10),
+                                item.getString("km"),
+                                item.getString("endereco_saida"),
+                                item.getString("endereco_chegada"),
+                                item.getString("img"),
+                                item.getString("classe"),
+                                item.getString("poltronas"));
 
                         lstViagem.add(c);
                     }
@@ -120,8 +121,23 @@ public class HomeUsuarioActivity extends AppCompatActivity
                 super.onPostExecute(aVoid);
                 adapter.addAll(lstViagem);
             }
-        }.execute();*/
+        }.execute();
 
+
+        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Viagem item = adapter.getItem(i);
+
+                Intent intent = new Intent(getApplicationContext(), DetalhesViagemActivity.class);
+
+                intent.putExtra("id", item.getId()+"");
+
+                startActivity(intent);
+
+            }
+        });
     }
 
     @Override
@@ -223,11 +239,9 @@ public class HomeUsuarioActivity extends AppCompatActivity
 
             Log.d("IP:",ipServidorSemPorta()+"/inf4m/asteroide/"+item.getImagem());
 
-            tltViagem.setText(item.getNome());
+            tltViagem.setText(item.getOrigem() + " x " + item.getDestino());
 
-            NumberFormat formato = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-
-            txtValor.setText("Apartir de "+formato.format(Double.parseDouble(item.getValor())));
+            txtValor.setText("Apartir de "+ converterDinheiro(item.getValor()));
 
             return v;
         }

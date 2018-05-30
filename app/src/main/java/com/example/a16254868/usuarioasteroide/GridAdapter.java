@@ -145,7 +145,7 @@ public class GridAdapter extends BaseAdapter{
             numero.setBackgroundResource(R.drawable.square_green);
         }else if(cor[i] == 1){
             numero.setBackgroundResource(R.drawable.square_yellow);
-        }else if(cor[i] == 3){
+        }else if(cor[i] == 2){
             numero.setBackgroundResource(R.drawable.square_red);
         }
         numero.setText(numeros[i]+"");

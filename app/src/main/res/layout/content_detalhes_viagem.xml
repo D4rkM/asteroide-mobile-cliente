@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.a16254868.usuarioasteroide.DetalhesViagemActivity"
+    tools:showIn="@layout/activity_detalhes_viagem"
+    android:padding="16dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Detalhes da Viagem"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="#4d9b61"
+        android:id="@+id/tltViagemDetail"/>
+
+    <ImageView
+        android:id="@+id/imgDetalheViagem"
+        android:layout_width="match_parent"
+        android:layout_height="153dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_launcher_background"
+        android:layout_gravity="center"
+        android:scaleType="fitXY"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Saida e Horario"
+        android:id="@+id/saidaHorarioDetail"
+        android:layout_marginBottom="10dp"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Destino e Horario"
+        android:id="@+id/destinoHorarioDetail"
+        android:layout_marginBottom="10dp"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Classe: Convencional"
+        android:id="@+id/classeOnibusDetail"
+        android:layout_marginBottom="10dp"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="R$ 50,00"
+        android:id="@+id/valorDetail"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#4d9b61"
+        android:textStyle="bold"
+        android:textSize="20sp"/>
+
+    <Button
+        android:layout_width="188dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="#4d9b61"
+        android:text="Comprar"
+        android:id="@+id/btnComprarViagemDetail"/>
+
+
+
+</LinearLayout>

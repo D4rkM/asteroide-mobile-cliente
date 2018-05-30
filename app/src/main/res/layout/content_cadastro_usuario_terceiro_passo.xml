@@ -53,21 +53,32 @@
                     android:layout_height="wrap_content"
                     android:text="Origem --> Destino"
                     android:textSize="18dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/origemDestino"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ida: Data e horário"
                     android:textSize="18dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/idaDataHorario"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Volta: Data e horário"
                     android:textSize="18dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/voltaDataHora"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Poltrona(s): 0"
+                    android:textSize="18dp"
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/poltronasCompradas"/>
 
             </LinearLayout>
 
@@ -98,6 +109,7 @@
                     android:textSize="20dp"
                     android:layout_gravity=""
                     android:textColor="#4d9b61"
+                    android:id="@+id/valorPassagem"
                     />
 
             </LinearLayout>
@@ -116,7 +128,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bandeiras"
+                android:text="Tipo de pagamento"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:textColor="#4d9b61"
@@ -124,44 +136,37 @@
                 />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="20dp">
 
-                <ImageView
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"
+                    android:text="Crédito"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
                     android:layout_weight="1"
-                    android:layout_marginLeft="5dp"/>
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_horizontal"
+                    />
 
-                <ImageView
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"
-                    android:layout_weight="1"/>
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"
-                    android:layout_weight="1"/>
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"
-                    android:layout_weight="1"/>
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"
-                    android:layout_weight="1"/>
+                    android:text="Boleto"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    />
 
 
             </LinearLayout>
 
             <RadioGroup
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
@@ -169,52 +174,157 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginLeft="20dp"/>
+                    android:layout_marginLeft="80dp"
+                    android:id="@+id/cartaoCredito"/>
 
                 <RadioButton
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginLeft="35dp"/>
-
-                <RadioButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="40dp"/>
-
-                <RadioButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="45dp"/>
-                <RadioButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="35dp"/>
+                    android:layout_marginLeft="60dp"
+                    android:id="@+id/boleto"/>
 
             </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bandeiras"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#4d9b61"
+                android:layout_marginTop="20dp"
+                android:id="@+id/txtTltBandeiras"
+                android:visibility="gone"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:id="@+id/linearIMGBandeiras"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/card_visa"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="3"
+                    android:layout_marginLeft="5dp"/>
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/card_itau"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="3"
+                    android:layout_marginLeft="15dp"/>
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/mastercard"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="3"
+                    android:layout_marginLeft="15dp"/>
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bradesco"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="3"
+                    android:layout_marginLeft="15dp"/>
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bancodobrasil"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="3"
+                    android:layout_marginLeft="15dp"/>
+
+
+            </LinearLayout>
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/rdosBandeiras"
+                android:visibility="gone">
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/bandeiraVisa"/>
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="35dp"
+                    android:id="@+id/bandeiraItau"/>
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="40dp"
+                    android:id="@+id/bandeiraMasterCard"/>
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="45dp"
+                    android:id="@+id/bandeiraBradesco"/>
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="35dp"
+                    android:id="@+id/bandeiraBancoDoBrasil"/>
+
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Seu CPF"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                android:id="@+id/tltCPF"
+                />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="CPF"
                 android:id="@+id/txtCPFCompraPassagem"
-                android:layout_marginTop="20dp"/>
+                android:visibility="gone"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nome"
+                android:hint="Número do Cartão"
                 android:id="@+id/txtNumCartaoCompraPassagem"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:inputType="number"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:id="@+id/linearMesAnoCartao"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="0dp"
@@ -233,7 +343,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:id="@+id/linearSpinnerMesAno"
+                android:visibility="gone">
 
                 <Spinner
                     android:layout_width="0dp"
@@ -257,7 +369,9 @@
                 android:text="Finalizar"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:background="#4d9b61"/>
+                android:background="#4d9b61"
+                android:id="@+id/btnFinalizarCompras"
+                android:visibility="gone"/>
 
         </LinearLayout>
     </ScrollView>
